@@ -632,6 +632,7 @@
                             if (attrs.validMethod === 'blur') {
                                 element.bind('blur', function() {
                                     var value = ctrl.$viewValue;
+                                    if (!ctrl.$dirty) return;
                                     scope.$apply(function() {
                                         checkValidation(scope, element, attrs, ctrl, validation, value);
                                     });
