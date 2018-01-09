@@ -1,0 +1,10 @@
+{
+  "name": "doxyme-angular-validate",
+  "version": "1.0.0",
+  "description": "Validation",
+  "main": "angular-validate.js"
+  "repository": {
+    "type": "git",
+    "url": "git@bitbucket.org:doxyme/angular-validate.git"
+  }
+}
