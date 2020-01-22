@@ -465,14 +465,17 @@
                     }
                     // Check with Function
                     if (expression.constructor === Function) {
+                        ctrl.$$parentForm.$pending = true;
                         return $q.all([$validationProvider.getExpression(validator)(value, scope, element, attrs, validatorParam)])
                             .then(function(data) {
+                                ctrl.$$parentForm.$pending = false;
                                 if (data && data.length > 0 && data[0]) {
                                     return valid.success();
                                 } else {
                                     return valid.error();
                                 }
                             }, function() {
+                                ctrl.$$parentForm.$pending = false;
                                 return valid.error();
                             });
                     }
