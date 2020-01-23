@@ -431,6 +431,11 @@
                  * @returns {}
                  */
                 var checkValidation = function(scope, element, attrs, ctrl, validation, value) {
+                    var setPending = function (value) {
+                      if (undefined !== ctrl.$$parentForm) {
+                        ctrl.$$parentForm['$pending'] = value;
+                      }
+                    };
 
                     var validators = validation.slice(0),
                         validatorExpr = validators[0].trim(),
@@ -465,17 +470,17 @@
                     }
                     // Check with Function
                     if (expression.constructor === Function) {
-                        ctrl.$$parentForm.$pending = true;
+                        setPending(true);
                         return $q.all([$validationProvider.getExpression(validator)(value, scope, element, attrs, validatorParam)])
                             .then(function(data) {
-                                ctrl.$$parentForm.$pending = false;
+                                setPending(false);
                                 if (data && data.length > 0 && data[0]) {
                                     return valid.success();
                                 } else {
                                     return valid.error();
                                 }
                             }, function() {
-                                ctrl.$$parentForm.$pending = false;
+                                setPending(false);
                                 return valid.error();
                             });
                     }
